@@ -131,13 +131,15 @@ var Main = (function (_super) {
         sky.width = stageW;
         sky.height = stageH;
         this.addChild(sky);
+        var aboutAlert = new About();
+        this.addChild(aboutAlert);
         this.scene = new Scene(this);
         this.textfield = new egret.TextField();
         this.textfield.x = 100;
         this.textfield.y = 300;
         this.addChild(this.textfield);
         this.plane = new PlayerPlane(this.createBitmapByName('aircraft_png'), this, this.width / 2, this.height - 100, 10);
-        var ammo = new Ammo(this.createBitmapByName('aircraftBullet_png'), this, [this.plane.centerX, this.plane.getPlaneBody().y - 40], 5);
+        var ammo = new Ammo(this.createBitmapByName('aircraftBullet_png'), this, [this.plane.centerX, this.plane.getPlaneBody.y - 40], 5);
         this.addEnemyPlane(6);
         this.startAmmoAnimation(ammo, true);
     };
@@ -146,7 +148,7 @@ var Main = (function (_super) {
         if (num === void 0) { num = 10; }
         for (var i = 0; i < num; i++) {
             var enemyPlane = new EnemyPlane(this.scene.enemyPlaneArr.length, this.createBitmapByName('aircraft_small_png'), this, GameUtil.setRandom(this.width - 40, 40), GameUtil.setRandom(180, 80), 1);
-            var enemyAmmo = new EnemyAmmo(this.createBitmapByName('enemyBullet_png'), this, [enemyPlane.centerX, enemyPlane.getPlaneBody().y + 40], -5);
+            var enemyAmmo = new EnemyAmmo(this.createBitmapByName('enemyBullet_png'), this, [enemyPlane.centerX, enemyPlane.getPlaneBody.y + 40], -5);
             this.startAmmoAnimation(enemyAmmo, false);
             this.scene.enemyPlaneArr.push(enemyPlane);
             this.scene.enemyAmmoArr.push(enemyAmmo);
@@ -156,12 +158,12 @@ var Main = (function (_super) {
     Main.prototype.startAmmoAnimation = function (ammo, isPlayer) {
         var _this = this;
         var ammoAnimation = setInterval(function () {
-            ammo.setAmmoAnimation(ammoAnimation);
-            ammo.setAmmoIndex(ammo.getAmmo().x, ammo.getAmmo().y - ammo.getSpeed());
+            ammo.setAmmoAnimation = ammoAnimation;
+            ammo.setAmmoIndex(ammo.getAmmo.x, ammo.getAmmo.y - ammo.getSpeed);
             var hit = _this.hitTest(ammo, isPlayer);
-            if (ammo.getAmmo().y < 0 || ammo.getAmmo().y > _this.height || hit != 0 /* NONE */) {
+            if (ammo.getAmmo.y < 0 || ammo.getAmmo.y > _this.height || hit != 0 /* NONE */) {
                 clearTimeout(ammoAnimation);
-                isPlayer ? ammo.setAmmoIndex(_this.plane.centerX - ammo.getAmmo().width / 2, _this.plane.getPlaneBody().y - 40) : ammo.initAmmoIndex();
+                isPlayer ? ammo.setAmmoIndex(_this.plane.centerX - ammo.getAmmo.width / 2, _this.plane.getPlaneBody.y - 40) : ammo.initAmmoIndex();
                 _this.startAmmoAnimation(ammo, isPlayer);
                 // if (this.gameEnd()) {
                 //     return;
@@ -173,21 +175,21 @@ var Main = (function (_super) {
     Main.prototype.hitTest = function (ammo, isPlayer) {
         for (var i = 0, max = this.scene.enemyPlaneArr.length; i < max; i++) {
             var enemyPlane = this.scene.enemyPlaneArr[i];
-            if (isPlayer && enemyPlane.getPlaneBody().hitTestPoint(ammo.centerX, ammo.centerY)) {
-                enemyPlane.setHP(enemyPlane.getHP() - 1);
-                this.textfield.text = "\u51FB\u4E2D\u4E86" + this.scene.enemyPlaneArr[i].getID() + "\u53F7\u654C\u673A";
-                if (enemyPlane.getHP() <= 0) {
-                    clearTimeout(this.scene.enemyAmmoArr[i].getAmmoAnimation());
+            if (isPlayer && enemyPlane.getPlaneBody.hitTestPoint(ammo.centerX, ammo.centerY)) {
+                enemyPlane.setHP = enemyPlane.getHP - 1;
+                this.textfield.text = "\u51FB\u4E2D\u4E86" + this.scene.enemyPlaneArr[i].getID + "\u53F7\u654C\u673A";
+                if (enemyPlane.getHP <= 0) {
+                    clearTimeout(this.scene.enemyAmmoArr[i].getAmmoAnimation);
                     this.scene.removeEnemyPlane(i);
                     console.log(this.scene.enemyAmmoArr);
                     return 4 /* ENEMDIT */;
                 }
                 return 2 /* ENEMHIT */;
             }
-            else if (!isPlayer && this.plane.getPlaneBody().hitTestPoint(ammo.centerX, ammo.centerY)) {
+            else if (!isPlayer && this.plane.getPlaneBody.hitTestPoint(ammo.centerX, ammo.centerY)) {
                 this.textfield.text = "\u51FB\u4E2D\u4E86\u81EA\u5DF1";
-                this.plane.setHP(this.plane.getHP() - 1);
-                if (this.plane.getHP() <= 0) {
+                this.plane.setHP = this.plane.getHP - 1;
+                if (this.plane.getHP <= 0) {
                     return 3 /* PLAYERDIE */;
                 }
                 return 1 /* PLAYERHIT */;
@@ -196,7 +198,7 @@ var Main = (function (_super) {
         return 0 /* NONE */;
     };
     Main.prototype.gameEnd = function () {
-        if (this.plane.getHP() <= 0) {
+        if (this.plane.getHP <= 0) {
             this.textfield.text = '游戏结束 你输了';
             return true;
         }

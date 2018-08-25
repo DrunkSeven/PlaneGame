@@ -1,11 +1,11 @@
 class Plane {
     protected planeBody: egret.Bitmap;              //机体
-    protected HP: number;                           //血量
+    protected HP: number=10;                        //血量
     public centerX: number;                         //飞机中心坐标x
     public centerY: number;                         //飞机中心坐标y
     public AmmoIndex: Array<number> = [0, 0];       //初始子弹位置
     constructor(protected body: egret.Bitmap, protected map: eui.UILayer, x: number, y: number, HP?: number) {
-        this.setPlaneBody(body);
+        this.setPlaneBody=body;
         this.setPlaneIndex(x, y);
         map.addChild(body);
     }
@@ -15,16 +15,16 @@ class Plane {
         this.centerX = x;
         this.centerY = y;
     }
-    public getPlaneBody(): egret.Bitmap {
+    get getPlaneBody(): egret.Bitmap {
         return this.planeBody;
     }
-    public setPlaneBody(planeBody: egret.Bitmap) {
+    set setPlaneBody(planeBody: egret.Bitmap) {
         this.planeBody = planeBody;
     }
-    public getHP(): number {
+    get getHP(): number {
         return this.HP;
     }
-    public setHP(HP: number = 10) {
+    set setHP(HP: number) {
         this.HP = HP;
     }
 }

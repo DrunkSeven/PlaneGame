@@ -18,13 +18,17 @@ var PlayerPlane = (function (_super) {
         _this.planeMove(map);
         _this.hpText = new egret.TextField();
         _this.map.addChild(_this.hpText);
-        _this.setHP(5);
+        _this.setHP = 5;
         return _this;
     }
-    PlayerPlane.prototype.setHP = function (HP) {
-        this.HP = HP;
-        this.hpText.text = "" + HP;
-    };
+    Object.defineProperty(PlayerPlane.prototype, "setHP", {
+        set: function (HP) {
+            this.HP = HP;
+            this.hpText.text = "" + HP;
+        },
+        enumerable: true,
+        configurable: true
+    });
     PlayerPlane.prototype.planeMove = function (map) {
         var _this = this;
         map.addEventListener(egret.TouchEvent.TOUCH_MOVE, function (e) {

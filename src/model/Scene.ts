@@ -7,14 +7,14 @@ class Scene {
         this.map = map;
     }
     public removeEnemyPlane(i) {
-        this.map.removeChild(this.enemyPlaneArr[i].getPlaneBody());
+        this.map.removeChild(this.enemyPlaneArr[i].getPlaneBody);
         this.map.removeChild(this.enemyPlaneArr[i].getHpText());
         this.enemyPlaneArr.splice(i, 1);
         this.removeEnemyAmmoArr(i);
     }
     public removeEnemyAmmoArr(i) {
-        this.map.removeChild(this.enemyAmmoArr[i].getAmmoBody());
-        clearTimeout(this.enemyAmmoArr[i].getAmmoAnimation());
+        this.map.removeChild(this.enemyAmmoArr[i].getAmmoBody);
+        clearTimeout(this.enemyAmmoArr[i].getAmmoAnimation);
         this.intervalArr.splice(i, 1);
         this.enemyAmmoArr.splice(i, 1);
     }

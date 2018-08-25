@@ -20,20 +20,27 @@ var EnemyPlane = (function (_super) {
         _this.hpText.x = _this.planeBody.x + 10;
         _this.hpText.y = _this.planeBody.y - 40;
         _this.map.addChild(_this.hpText);
-        _this.setHP(HP);
+        _this.setHP = HP;
         return _this;
     }
     EnemyPlane.prototype.getHpText = function () {
         return this.hpText;
     };
-    EnemyPlane.prototype.getID = function () {
-        return this.ID;
-    };
-    EnemyPlane.prototype.setHP = function (HP) {
-        if (HP === void 0) { HP = 5; }
-        this.HP = HP;
-        this.hpText.text = HP + " " + this.ID + "\u53F7\u654C\u673A";
-    };
+    Object.defineProperty(EnemyPlane.prototype, "getID", {
+        get: function () {
+            return this.ID;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(EnemyPlane.prototype, "setHP", {
+        set: function (HP) {
+            this.HP = HP;
+            this.hpText.text = HP + " " + this.ID + "\u53F7\u654C\u673A";
+        },
+        enumerable: true,
+        configurable: true
+    });
     return EnemyPlane;
 }(Plane));
 __reflect(EnemyPlane.prototype, "EnemyPlane");

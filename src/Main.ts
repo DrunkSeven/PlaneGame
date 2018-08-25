@@ -5,6 +5,7 @@ const enum hitIntroduce {
     'PLAYERDIE',
     'ENEMDIT',
 };          //伤害描述
+
 class Main extends eui.UILayer {
     protected createChildren(): void {
         super.createChildren();
@@ -65,13 +66,15 @@ class Main extends eui.UILayer {
         sky.width = stageW;
         sky.height = stageH;
         this.addChild(sky);
+        let aboutAlert:About=new About();
+        this.addChild(aboutAlert);
         this.scene = new Scene(this);
         this.textfield = new egret.TextField();
         this.textfield.x = 100;
         this.textfield.y = 300;
         this.addChild(this.textfield);
         this.plane = new PlayerPlane(this.createBitmapByName('aircraft_png'), this, this.width / 2, this.height - 100, 10);
-        let ammo: Ammo = new Ammo(this.createBitmapByName('aircraftBullet_png'), this, [this.plane.centerX, this.plane.getPlaneBody().y - 40], 5);
+        let ammo: Ammo = new Ammo(this.createBitmapByName('aircraftBullet_png'), this, [this.plane.centerX, this.plane.getPlaneBody.y - 40], 5);
         this.addEnemyPlane(6);
         this.startAmmoAnimation(ammo, true);
     }
@@ -79,7 +82,7 @@ class Main extends eui.UILayer {
     private addEnemyPlane(num: number = 10) {
         for (let i = 0; i < num; i++) {
             let enemyPlane: EnemyPlane = new EnemyPlane(this.scene.enemyPlaneArr.length, this.createBitmapByName('aircraft_small_png'), this, GameUtil.setRandom(this.width - 40, 40), GameUtil.setRandom(180, 80), 1);
-            let enemyAmmo: EnemyAmmo = new EnemyAmmo(this.createBitmapByName('enemyBullet_png'), this, [enemyPlane.centerX, enemyPlane.getPlaneBody().y + 40], -5);
+            let enemyAmmo: EnemyAmmo = new EnemyAmmo(this.createBitmapByName('enemyBullet_png'), this, [enemyPlane.centerX, enemyPlane.getPlaneBody.y + 40], -5);
             this.startAmmoAnimation(enemyAmmo, false);
             this.scene.enemyPlaneArr.push(enemyPlane);
             this.scene.enemyAmmoArr.push(enemyAmmo);
@@ -88,12 +91,12 @@ class Main extends eui.UILayer {
     //子弹动画
     private startAmmoAnimation(ammo: Ammo, isPlayer: boolean) {
         let ammoAnimation: number = setInterval(() => {
-            ammo.setAmmoAnimation(ammoAnimation);
-            ammo.setAmmoIndex(ammo.getAmmo().x, ammo.getAmmo().y - ammo.getSpeed());
+            ammo.setAmmoAnimation=ammoAnimation;
+            ammo.setAmmoIndex(ammo.getAmmo.x, ammo.getAmmo.y - ammo.getSpeed);
             let hit = this.hitTest(ammo, isPlayer);
-            if (ammo.getAmmo().y < 0 || ammo.getAmmo().y > this.height || hit != hitIntroduce.NONE) {
+            if (ammo.getAmmo.y < 0 || ammo.getAmmo.y > this.height || hit != hitIntroduce.NONE) {
                 clearTimeout(ammoAnimation);
-                isPlayer ? ammo.setAmmoIndex(this.plane.centerX - ammo.getAmmo().width / 2, this.plane.getPlaneBody().y - 40) : ammo.initAmmoIndex();
+                isPlayer ? ammo.setAmmoIndex(this.plane.centerX - ammo.getAmmo.width / 2, this.plane.getPlaneBody.y - 40) : ammo.initAmmoIndex();
                 this.startAmmoAnimation(ammo, isPlayer);
                 // if (this.gameEnd()) {
                 //     return;
@@ -105,20 +108,20 @@ class Main extends eui.UILayer {
     private hitTest(ammo: Ammo, isPlayer: boolean): hitIntroduce {
         for (let i = 0, max = this.scene.enemyPlaneArr.length; i < max; i++) {
             let enemyPlane = this.scene.enemyPlaneArr[i];
-            if (isPlayer && enemyPlane.getPlaneBody().hitTestPoint(ammo.centerX, ammo.centerY)) {
-                enemyPlane.setHP(enemyPlane.getHP() - 1);
-                this.textfield.text = `击中了${this.scene.enemyPlaneArr[i].getID()}号敌机`;
-                if (enemyPlane.getHP() <= 0) {
-                    clearTimeout(this.scene.enemyAmmoArr[i].getAmmoAnimation());
+            if (isPlayer && enemyPlane.getPlaneBody.hitTestPoint(ammo.centerX, ammo.centerY)) {
+                enemyPlane.setHP=enemyPlane.getHP - 1;
+                this.textfield.text = `击中了${this.scene.enemyPlaneArr[i].getID}号敌机`;
+                if (enemyPlane.getHP <= 0) {
+                    clearTimeout(this.scene.enemyAmmoArr[i].getAmmoAnimation);
                     this.scene.removeEnemyPlane(i);
                     console.log(this.scene.enemyAmmoArr);
                     return hitIntroduce.ENEMDIT;
                 }
                 return hitIntroduce.ENEMHIT;
-            } else if (!isPlayer && this.plane.getPlaneBody().hitTestPoint(ammo.centerX, ammo.centerY)) {
+            } else if (!isPlayer && this.plane.getPlaneBody.hitTestPoint(ammo.centerX, ammo.centerY)) {
                 this.textfield.text = `击中了自己`;
-                this.plane.setHP(this.plane.getHP() - 1);
-                if (this.plane.getHP() <= 0) {
+                this.plane.setHP=this.plane.getHP - 1;
+                if (this.plane.getHP <= 0) {
                     return hitIntroduce.PLAYERDIE;
                 }
                 return hitIntroduce.PLAYERHIT;
@@ -127,7 +130,7 @@ class Main extends eui.UILayer {
         return hitIntroduce.NONE;
     }
     private gameEnd() {
-        if (this.plane.getHP() <= 0) {
+        if (this.plane.getHP <= 0) {
             this.textfield.text = '游戏结束 你输了';
             return true;
         } else if (!this.scene.enemyPlaneArr.length) {

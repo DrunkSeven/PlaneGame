@@ -8,9 +8,9 @@ class PlayerPlane extends Plane {
         this.planeMove(map);
         this.hpText = new egret.TextField();
         this.map.addChild(this.hpText);
-        this.setHP(5);
+        this.setHP=5;
     }
-    setHP(HP: number) {
+    set setHP(HP: number) {
         this.HP = HP;
         this.hpText.text = `${HP}`;
     }

@@ -5,8 +5,9 @@ var Plane = (function () {
     function Plane(body, map, x, y, HP) {
         this.body = body;
         this.map = map;
+        this.HP = 10; //血量
         this.AmmoIndex = [0, 0]; //初始子弹位置
-        this.setPlaneBody(body);
+        this.setPlaneBody = body;
         this.setPlaneIndex(x, y);
         map.addChild(body);
     }
@@ -16,19 +17,34 @@ var Plane = (function () {
         this.centerX = x;
         this.centerY = y;
     };
-    Plane.prototype.getPlaneBody = function () {
-        return this.planeBody;
-    };
-    Plane.prototype.setPlaneBody = function (planeBody) {
-        this.planeBody = planeBody;
-    };
-    Plane.prototype.getHP = function () {
-        return this.HP;
-    };
-    Plane.prototype.setHP = function (HP) {
-        if (HP === void 0) { HP = 10; }
-        this.HP = HP;
-    };
+    Object.defineProperty(Plane.prototype, "getPlaneBody", {
+        get: function () {
+            return this.planeBody;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Plane.prototype, "setPlaneBody", {
+        set: function (planeBody) {
+            this.planeBody = planeBody;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Plane.prototype, "getHP", {
+        get: function () {
+            return this.HP;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Plane.prototype, "setHP", {
+        set: function (HP) {
+            this.HP = HP;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return Plane;
 }());
 __reflect(Plane.prototype, "Plane");

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="400" height="300" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image width="200" height="150" x="199.07" anchorOffsetX="100" anchorOffsetY="75.14" top="75" source="bg_jpg"/>
+	<e:Button id="closeBtn" label="Button" x="269.07" y="75" anchorOffsetY="0" height="30" anchorOffsetX="0" width="30" enabled="true"/>
+	<e:Label id="aboutText" text="Label" x="163" y="120" bold="true"/>
+</e:Skin>

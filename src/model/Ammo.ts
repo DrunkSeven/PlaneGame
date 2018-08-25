@@ -9,19 +9,19 @@ class Ammo {
     public centerX: number;                      //子弹中心坐标x
     public centerY: number;                      //子弹中心坐标y;
     constructor(ammo: egret.Bitmap, protected map: eui.UILayer, initialIndex: Array<number>, speed?: number) {
-        this.setAmmo(ammo);
+        this.setAmmo=ammo;
         map.addChild(ammo);
-        this.setSpeed(speed || 5);
-        this.initialIndex = [initialIndex[0] - this.getAmmo().width / 2, initialIndex[1]];
+        this.setSpeed=speed || 5;
+        this.initialIndex = [initialIndex[0] - this.getAmmo.width / 2, initialIndex[1]];
         this.initAmmoIndex();
     }
-    public setAmmoAnimation(ammoAnimation) {
+    set setAmmoAnimation(ammoAnimation) {
         this.ammoAnimation = ammoAnimation;
     }
-    public getAmmoAnimation() {
+    get getAmmoAnimation() {
         return this.ammoAnimation;
     }
-    public getAmmoBody(): egret.Bitmap {
+    get getAmmoBody(): egret.Bitmap {
         return this.ammoBody;
     }
     public initAmmoIndex() {                 //初始化子弹坐标
@@ -34,16 +34,16 @@ class Ammo {
         this.centerX = x + this.ammoBody.width / 2;
         this.centerY = y + this.ammoBody.width / 2;
     }
-    public getAmmo(): egret.Bitmap {
+    get getAmmo(): egret.Bitmap {
         return this.ammoBody;
     }
-    public getSpeed(): number {
+    get getSpeed(): number {
         return this.speed;
     }
-    public setSpeed(speed: number) {
+    set setSpeed(speed: number) {
         this.speed = speed;
     }
-    public setAmmo(ammoBody: egret.Bitmap) {
+    set setAmmo(ammoBody: egret.Bitmap) {
         this.ammoBody = ammoBody;
     }
     public toString() {

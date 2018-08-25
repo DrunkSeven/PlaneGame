@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="400" height="300" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image width="200" height="150" x="199.07" anchorOffsetX="100" anchorOffsetY="75.14" top="75" source="bg_jpg"/>
+	<e:Label id="aboutText" text="关于" x="163" y="120" bold="true"/>
+</e:Skin>

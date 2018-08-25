@@ -2,7 +2,7 @@
  * 敌方飞机类
  */
 class EnemyPlane extends Plane {
-    private ID;
+    private ID:number;
     private hpText: egret.TextField;
     constructor(ID: number, body: egret.Bitmap, map: eui.UILayer, x: number, y: number, HP?: number) {
         super(body, map, x, y);
@@ -11,15 +11,15 @@ class EnemyPlane extends Plane {
         this.hpText.x = this.planeBody.x + 10;
         this.hpText.y = this.planeBody.y - 40;
         this.map.addChild(this.hpText);
-        this.setHP(HP);
+        this.setHP=HP;
     }
     public getHpText() {
         return this.hpText;
     }
-    getID() {
+    get getID():number {
         return this.ID;
     }
-    setHP(HP: number = 5) {
+    set setHP(HP: number) {
         this.HP = HP;
         this.hpText.text = `${HP} ${this.ID}号敌机`;
     }

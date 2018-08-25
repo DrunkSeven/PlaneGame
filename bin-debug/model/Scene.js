@@ -9,14 +9,14 @@ var Scene = (function () {
         this.map = map;
     }
     Scene.prototype.removeEnemyPlane = function (i) {
-        this.map.removeChild(this.enemyPlaneArr[i].getPlaneBody());
+        this.map.removeChild(this.enemyPlaneArr[i].getPlaneBody);
         this.map.removeChild(this.enemyPlaneArr[i].getHpText());
         this.enemyPlaneArr.splice(i, 1);
         this.removeEnemyAmmoArr(i);
     };
     Scene.prototype.removeEnemyAmmoArr = function (i) {
-        this.map.removeChild(this.enemyAmmoArr[i].getAmmoBody());
-        clearTimeout(this.enemyAmmoArr[i].getAmmoAnimation());
+        this.map.removeChild(this.enemyAmmoArr[i].getAmmoBody);
+        clearTimeout(this.enemyAmmoArr[i].getAmmoAnimation);
         this.intervalArr.splice(i, 1);
         this.enemyAmmoArr.splice(i, 1);
     };
