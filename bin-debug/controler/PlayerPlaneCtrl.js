@@ -3,9 +3,23 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 };
 var PlayerPlaneCtrl = (function () {
     function PlayerPlaneCtrl() {
-        this.plane = new PlayerPlane(GameUtil.createBitmapByName('aircraft_png'), map.width / 2, map.height - 100, 10);
-        this.ammoCtrl = new AmmoCtrl(this.plane, 'aircraftBullet_png', { y: -40 });
+        this._playerPlane = new PlayerPlane('aircraft_png', map.width / 2, map.height - 100, 10);
+        this.ammoCtrl = new AmmoCtrl(this._playerPlane, 'aircraftBullet_png', { y: -40 });
     }
+    Object.defineProperty(PlayerPlaneCtrl.prototype, "playerPlane", {
+        get: function () {
+            return this._playerPlane;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(PlayerPlaneCtrl.prototype, "ammoArr", {
+        get: function () {
+            return this.ammoCtrl.ammoArr;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return PlayerPlaneCtrl;
 }());
 __reflect(PlayerPlaneCtrl.prototype, "PlayerPlaneCtrl");

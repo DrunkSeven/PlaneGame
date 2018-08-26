@@ -5,13 +5,21 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
  * 子弹类
  */
 var Ammo = (function () {
-    function Ammo(ammo, initialIndex, speed) {
-        this.setAmmo = ammo;
-        map.addChild(ammo);
+    function Ammo(bodyImg, initialIndex, id, speed) {
+        this.setAmmo = GameUtil.createBitmapByName(bodyImg);
+        this._ID = id;
+        map.addChild(this.ammoBody);
         this.setSpeed = speed || 5;
         this.initialIndex = [initialIndex[0] - this.getAmmo.width / 2, initialIndex[1]];
         this.initAmmoIndex();
     }
+    Object.defineProperty(Ammo.prototype, "ID", {
+        get: function () {
+            return this._ID;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Ammo.prototype, "timeInterval", {
         get: function () {
             return this._timeInterval;
@@ -32,13 +40,6 @@ var Ammo = (function () {
     Object.defineProperty(Ammo.prototype, "getAmmoAnimation", {
         get: function () {
             return this.ammoAnimation;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Ammo.prototype, "getAmmoBody", {
-        get: function () {
-            return this.ammoBody;
         },
         enumerable: true,
         configurable: true

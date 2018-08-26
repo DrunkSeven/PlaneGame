@@ -15,7 +15,7 @@ var GameUtil = {
         return obj1;
     },
     createBitmapByName: function (name) {
-        var result = new egret.Bitmap();
+        var result = new eui.Image();
         var texture = RES.getRes(name);
         result.texture = texture;
         return result;

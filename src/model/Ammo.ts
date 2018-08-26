@@ -2,19 +2,24 @@
  * 子弹类
  */
 class Ammo {
-    private ammoBody: egret.Bitmap;              //子弹本体
+    private ammoBody: eui.Image;              //子弹本体
     private speed: number;                       //子弹速度
     private _timeInterval: number;               //子弹发射时间间隔
     private ammoAnimation: number;               //子弹动画编号
     private initialIndex: Array<number>          //子弹初始坐标;
+    private _ID: number;                          //子弹ID;
     public centerX: number;                      //子弹中心坐标x
     public centerY: number;                      //子弹中心坐标y;
-    constructor(ammo: egret.Bitmap, initialIndex: Array<number>, speed?: number) {
-        this.setAmmo = ammo;
-        map.addChild(ammo);
+    constructor(bodyImg: string, initialIndex: Array<number>, id: number, speed?: number) {
+        this.setAmmo = GameUtil.createBitmapByName(bodyImg);
+        this._ID = id;
+        map.addChild(this.ammoBody);
         this.setSpeed = speed || 5;
         this.initialIndex = [initialIndex[0] - this.getAmmo.width / 2, initialIndex[1]];
         this.initAmmoIndex();
+    }
+    get ID() {
+        return this._ID;
     }
     get timeInterval(): number {
         return this._timeInterval;
@@ -28,9 +33,6 @@ class Ammo {
     get getAmmoAnimation() {
         return this.ammoAnimation;
     }
-    get getAmmoBody(): egret.Bitmap {
-        return this.ammoBody;
-    }
     public initAmmoIndex() {                 //初始化子弹坐标
         this.ammoBody.x = this.initialIndex[0];
         this.ammoBody.y = this.initialIndex[1];
@@ -41,7 +43,7 @@ class Ammo {
         this.centerX = x + this.ammoBody.width / 2;
         this.centerY = y + this.ammoBody.width / 2;
     }
-    get getAmmo(): egret.Bitmap {
+    get getAmmo(): eui.Image {
         return this.ammoBody;
     }
     get getSpeed(): number {
@@ -50,7 +52,7 @@ class Ammo {
     set setSpeed(speed: number) {
         this.speed = speed;
     }
-    set setAmmo(ammoBody: egret.Bitmap) {
+    set setAmmo(ammoBody: eui.Image) {
         this.ammoBody = ammoBody;
     }
     public toString() {

@@ -13,8 +13,8 @@ const GameUtil = {
         }
         return obj1;
     },
-    createBitmapByName: (name: string): egret.Bitmap => {
-        let result = new egret.Bitmap();
+    createBitmapByName: (name: string): eui.Image => {
+        let result = new eui.Image();
         let texture: egret.Texture = RES.getRes(name);
         result.texture = texture;
         return result;

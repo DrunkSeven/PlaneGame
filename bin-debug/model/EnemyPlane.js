@@ -15,7 +15,7 @@ var EnemyPlane = (function (_super) {
     __extends(EnemyPlane, _super);
     function EnemyPlane(ID, body, x, y, HP) {
         var _this = _super.call(this, body, x, y) || this;
-        _this.ID = ID;
+        _this._ID = ID;
         _this.hpText = new egret.TextField();
         _this.hpText.x = _this.planeBody.x + 10;
         _this.hpText.y = _this.planeBody.y - 40;
@@ -26,9 +26,9 @@ var EnemyPlane = (function (_super) {
     EnemyPlane.prototype.getHpText = function () {
         return this.hpText;
     };
-    Object.defineProperty(EnemyPlane.prototype, "getID", {
+    Object.defineProperty(EnemyPlane.prototype, "ID", {
         get: function () {
-            return this.ID;
+            return this._ID;
         },
         enumerable: true,
         configurable: true

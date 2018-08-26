@@ -14,7 +14,7 @@ var AmmoCtrl = (function () {
     function AmmoCtrl(plane, ammoImg, option) {
         if (option === void 0) { option = {}; }
         var _this = this;
-        this.ammoArr = [];
+        this._ammoArr = [];
         this.intervalArr = [];
         this.option = {
             x: 0,
@@ -26,14 +26,29 @@ var AmmoCtrl = (function () {
         };
         GameUtil.setOption(this.option, option);
         var interval = setInterval(function () {
-            var ammo = new Ammo(GameUtil.createBitmapByName(ammoImg), [plane.centerX + _this.option.x, plane.getPlaneBody.y + _this.option.y], _this.option.speed);
-            _this.ammoArr.push(ammo);
+            var ammo = new Ammo(ammoImg, [plane.centerX + _this.option.x, plane.getPlaneBody.y + _this.option.y], _this._ammoArr.length, _this.option.speed);
+            ammo.getAmmo.addEventListener(eui.UIEvent.REMOVED, _this.onRemove, { ammo: ammo, ammoArr: _this._ammoArr });
+            _this._ammoArr.push(ammo);
             _this.startAmmoAnimation(ammo, _this.option.direction);
-            if (_this.option.count && _this.ammoArr.length == _this.option.count) {
+            if (_this.option.count && _this._ammoArr.length == _this.option.count) {
                 clearInterval(interval);
             }
         }, this.option.timeInterval);
     }
+    AmmoCtrl.prototype.onRemove = function () {
+        var _this = this;
+        this.ammoArr.splice(this.ammoArr.findIndex(function (item) {
+            return item.ID == _this.ammo.ID;
+        }), 1);
+        clearTimeout(this.ammo.getAmmoAnimation);
+    };
+    Object.defineProperty(AmmoCtrl.prototype, "ammoArr", {
+        get: function () {
+            return this._ammoArr;
+        },
+        enumerable: true,
+        configurable: true
+    });
     //子弹动画
     AmmoCtrl.prototype.startAmmoAnimation = function (ammo, direction, isPlayer) {
         var ammoAnimation = setInterval(function () {
@@ -42,7 +57,7 @@ var AmmoCtrl = (function () {
             // let hit = this.hitTest(ammo, isPlayer);
             if (ammo.getAmmo.y < -5) {
                 clearTimeout(ammoAnimation);
-                map.removeChild(ammo.getAmmoBody);
+                map.removeChild(ammo.getAmmo);
                 // isPlayer ? ammo.setAmmoIndex(this.plane.centerX - ammo.getAmmo.width / 2, this.plane.getPlaneBody.y - 40) : ammo.initAmmoIndex();
                 // this.startAmmoAnimation(ammo, isPlayer);
                 // if (this.gameEnd()) {

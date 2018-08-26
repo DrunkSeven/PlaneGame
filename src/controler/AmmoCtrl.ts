@@ -1,6 +1,5 @@
 class AmmoCtrl {
-    private ammo: Ammo;
-    ammoArr: Array<Ammo> = [];
+    private _ammoArr: Array<Ammo> = [];
     intervalArr: Array<number> = [];
     private option = {
         x: 0,
@@ -22,15 +21,24 @@ class AmmoCtrl {
     constructor(plane: Plane, ammoImg: string, option: any = {}) {
         GameUtil.setOption(this.option, option);
         let interval = setInterval(() => {
-            let ammo: Ammo = new Ammo(GameUtil.createBitmapByName(ammoImg), [plane.centerX + this.option.x, plane.getPlaneBody.y + this.option.y], this.option.speed);
-            this.ammoArr.push(ammo);
+            let ammo: Ammo = new Ammo(ammoImg, [plane.centerX + this.option.x, plane.getPlaneBody.y + this.option.y], this._ammoArr.length, this.option.speed);
+            ammo.getAmmo.addEventListener(eui.UIEvent.REMOVED, this.onRemove, { ammo: ammo, ammoArr: this._ammoArr });
+            this._ammoArr.push(ammo);
             this.startAmmoAnimation(ammo, this.option.direction);
-            if (this.option.count && this.ammoArr.length == this.option.count) {
+            if (this.option.count && this._ammoArr.length == this.option.count) {
                 clearInterval(interval);
             }
         }, this.option.timeInterval);
     }
-
+    onRemove(this: any) {
+        this.ammoArr.splice(this.ammoArr.findIndex(item => {
+            return item.ID == this.ammo.ID;
+        }), 1);
+        clearTimeout(this.ammo.getAmmoAnimation);
+    }
+    get ammoArr() {
+        return this._ammoArr;
+    }
     //子弹动画
     private startAmmoAnimation(ammo: Ammo, direction: number, isPlayer?: boolean) {
         let ammoAnimation: number = setInterval(() => {
@@ -39,7 +47,8 @@ class AmmoCtrl {
             // let hit = this.hitTest(ammo, isPlayer);
             if (ammo.getAmmo.y < -5) {
                 clearTimeout(ammoAnimation);
-                map.removeChild(ammo.getAmmoBody);
+                map.removeChild(ammo.getAmmo);
+
                 // isPlayer ? ammo.setAmmoIndex(this.plane.centerX - ammo.getAmmo.width / 2, this.plane.getPlaneBody.y - 40) : ammo.initAmmoIndex();
                 // this.startAmmoAnimation(ammo, isPlayer);
                 // if (this.gameEnd()) {
@@ -48,30 +57,5 @@ class AmmoCtrl {
             }
         }, ammo.getSpeed);
         this.intervalArr.push(ammoAnimation);
-    }
-    //子弹碰撞检测
-    private hitTest(ammo: Ammo, isPlayer: boolean): hitIntroduce {
-        for (let i = 0, max = this.scene.enemyPlaneArr.length; i < max; i++) {
-            let enemyPlane = this.scene.enemyPlaneArr[i];
-            if (isPlayer && enemyPlane.getPlaneBody.hitTestPoint(ammo.centerX, ammo.centerY)) {
-                enemyPlane.setHP = enemyPlane.getHP - 1;
-                this.textfield.text = `击中了${this.scene.enemyPlaneArr[i].getID}号敌机`;
-                if (enemyPlane.getHP <= 0) {
-                    clearTimeout(this.scene.enemyAmmoArr[i].getAmmoAnimation);
-                    this.scene.removeEnemyPlane(i);
-                    console.log(this.scene.enemyAmmoArr);
-                    return hitIntroduce.ENEMDIT;
-                }
-                return hitIntroduce.ENEMHIT;
-            } else if (!isPlayer && this.plane.getPlaneBody.hitTestPoint(ammo.centerX, ammo.centerY)) {
-                this.textfield.text = `击中了自己`;
-                this.plane.setHP = this.plane.getHP - 1;
-                if (this.plane.getHP <= 0) {
-                    return hitIntroduce.PLAYERDIE;
-                }
-                return hitIntroduce.PLAYERHIT;
-            }
-        }
-        return hitIntroduce.NONE;
     }
 }

@@ -3,7 +3,7 @@
  */
 class PlayerPlane extends Plane {
     private hpText: egret.TextField;
-    constructor(body: egret.Bitmap, x: number, y: number, HP?: number) {
+    constructor(body: string, x: number, y: number, HP?: number) {
         super(body, x, y, HP);
         this.planeMove();
         this.hpText = new egret.TextField();

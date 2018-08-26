@@ -5,10 +5,11 @@ var Plane = (function () {
     function Plane(body, x, y, HP) {
         this.body = body;
         this.HP = 10; //血量
+        this._id = "PLAYER"; //id
         this.AmmoIndex = [0, 0]; //初始子弹位置
-        this.setPlaneBody = body;
+        this.setPlaneBody = GameUtil.createBitmapByName(body);
         this.setPlaneIndex(x, y);
-        map.addChild(body);
+        map.addChild(this.planeBody);
     }
     Plane.prototype.setPlaneIndex = function (x, y) {
         this.planeBody.x = x - this.planeBody.width / 2;
@@ -16,6 +17,13 @@ var Plane = (function () {
         this.centerX = x;
         this.centerY = y;
     };
+    Object.defineProperty(Plane.prototype, "id", {
+        get: function () {
+            return this._id;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Plane.prototype, "getPlaneBody", {
         get: function () {
             return this.planeBody;

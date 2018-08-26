@@ -9,15 +9,12 @@ const enum hitIntroduce {
 class Main extends eui.UILayer {
     protected createChildren(): void {
         super.createChildren();
-        egret.lifecycle.addLifecycleListener((context) => {
-            // custom lifecycle plugin
-        })
-        egret.lifecycle.onPause = () => {
-            egret.ticker.pause();
-        }
-        egret.lifecycle.onResume = () => {
-            egret.ticker.resume();
-        }
+        // egret.lifecycle.addLifecycleListener((context) => {
+        //     // custom lifecycle plugin
+        // })
+        // egret.lifecycle.onResume = () => {
+        //     egret.ticker.resume();
+        // }
         let assetAdapter = new AssetAdapter();
         egret.registerImplementation("eui.IAssetAdapter", assetAdapter);
         egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
@@ -75,55 +72,52 @@ class Main extends eui.UILayer {
         this.textfield.y = 300;
         this.addChild(this.textfield);
         this.plane = new PlayerPlaneCtrl();
-        let enemyPlaneCtrl = new EnemyPlaneCtrl();
+        let enemyPlaneCtrl: EnemyPlaneCtrl = new EnemyPlaneCtrl();
+        let option = { enemyPlaneArr: enemyPlaneCtrl.enemyPlaneArr, enemyEmmoArr: enemyPlaneCtrl.ammoArr, playerEmmoArr: this.plane.ammoArr, this: this }
+        this.addEventListener(egret.Event.ENTER_FRAME, this.onHitTest, option)
         // this.addEnemyPlane(6);
         // this.startAmmoAnimation(ammo, true);
     }
+    //子弹碰撞检测
+    private onHitTest(this) {
+        this.enemyPlaneArr.forEach((plane: EnemyPlane) => {
+            this.playerEmmoArr.forEach((ammo: Ammo) => {
+                if (plane.getPlaneBody.hitTestPoint(ammo.centerX, ammo.centerY)) {
+                    plane.setHP = plane.getHP - 1;
+                    map.removeChild(ammo.getAmmo);
+                    if (plane.getHP <= 0) {
+                        map.removeChild(plane.getPlaneBody);
+                    }
+                }
+            });
+        });
+        if (this.this.gameEnd(this.enemyPlaneArr.length)) {
+            egret.lifecycle.onPause = () => {
+                egret.ticker.pause();
+            }
+        }
+    }
+
     //设置敌机 num 敌机数量
     private addEnemyPlane(num: number = 10) {
         for (let i = 0; i < num; i++) {
-            let enemyPlane: EnemyPlane = new EnemyPlane(this.scene.enemyPlaneArr.length, this.createBitmapByName('aircraft_small_png'), GameUtil.setRandom(this.width - 40, 40), GameUtil.setRandom(180, 80), 1);
-            let enemyAmmo: EnemyAmmo = new EnemyAmmo(this.createBitmapByName('enemyBullet_png'), [enemyPlane.centerX, enemyPlane.getPlaneBody.y + 40], -5);
+            let enemyPlane: EnemyPlane = new EnemyPlane(this.scene.enemyPlaneArr.length, 'aircraft_small_png', GameUtil.setRandom(this.width - 40, 40), GameUtil.setRandom(180, 80), 1);
+            let enemyAmmo: EnemyAmmo = new EnemyAmmo('enemyBullet_png', [enemyPlane.centerX, enemyPlane.getPlaneBody.y + 40], -5);
             // this.startAmmoAnimation(enemyAmmo, false);
             this.scene.enemyPlaneArr.push(enemyPlane);
             this.scene.enemyAmmoArr.push(enemyAmmo);
         }
     }
-    //子弹碰撞检测
-    // private hitTest(ammo: Ammo, isPlayer: boolean): hitIntroduce {
-    //     for (let i = 0, max = this.scene.enemyPlaneArr.length; i < max; i++) {
-    //         let enemyPlane = this.scene.enemyPlaneArr[i];
-    //         if (isPlayer && enemyPlane.getPlaneBody.hitTestPoint(ammo.centerX, ammo.centerY)) {
-    //             enemyPlane.setHP=enemyPlane.getHP - 1;
-    //             this.textfield.text = `击中了${this.scene.enemyPlaneArr[i].getID}号敌机`;
-    //             if (enemyPlane.getHP <= 0) {
-    //                 clearTimeout(this.scene.enemyAmmoArr[i].getAmmoAnimation);
-    //                 this.scene.removeEnemyPlane(i);
-    //                 console.log(this.scene.enemyAmmoArr);
-    //                 return hitIntroduce.ENEMDIT;
-    //             }
-    //             return hitIntroduce.ENEMHIT;
-    //         } else if (!isPlayer && this.plane.getPlaneBody.hitTestPoint(ammo.centerX, ammo.centerY)) {
-    //             this.textfield.text = `击中了自己`;
-    //             this.plane.setHP=this.plane.getHP - 1;
-    //             if (this.plane.getHP <= 0) {
-    //                 return hitIntroduce.PLAYERDIE;
-    //             }
-    //             return hitIntroduce.PLAYERHIT;
-    //         }
-    //     }
-    //     return hitIntroduce.NONE;
-    // }
-    // private gameEnd() {
-    //     if (this.plane.getHP <= 0) {
-    //         this.textfield.text = '游戏结束 你输了';
-    //         return true;
-    //     } else if (!this.scene.enemyPlaneArr.length) {
-    //         this.textfield.text = '游戏结束 你赢了';
-    //         return true;
-    //     }
-    //     return false;
-    // }
+    private gameEnd(enemyNum: number): boolean {
+        if (this.plane.playerPlane.getHP <= 0) {
+            this.textfield.text = '游戏结束 你输了';
+            return true;
+        } else if (!enemyNum) {
+            this.textfield.text = '游戏结束 你赢了';
+            return true;
+        }
+        return false;
+    }
     public createBitmapByName(name: string): egret.Bitmap {
         let result = new egret.Bitmap();
         let texture: egret.Texture = RES.getRes(name);

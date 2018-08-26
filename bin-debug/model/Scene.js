@@ -14,7 +14,7 @@ var Scene = (function () {
         this.removeEnemyAmmoArr(i);
     };
     Scene.prototype.removeEnemyAmmoArr = function (i) {
-        map.removeChild(this.enemyAmmoArr[i].getAmmoBody);
+        map.removeChild(this.enemyAmmoArr[i].getAmmo);
         clearTimeout(this.enemyAmmoArr[i].getAmmoAnimation);
         this.intervalArr.splice(i, 1);
         this.enemyAmmoArr.splice(i, 1);
