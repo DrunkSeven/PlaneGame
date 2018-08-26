@@ -13,11 +13,11 @@ r.prototype = e.prototype, t.prototype = new r();
  */
 var PlayerPlane = (function (_super) {
     __extends(PlayerPlane, _super);
-    function PlayerPlane(body, map, x, y, HP) {
-        var _this = _super.call(this, body, map, x, y, HP) || this;
-        _this.planeMove(map);
+    function PlayerPlane(body, x, y, HP) {
+        var _this = _super.call(this, body, x, y, HP) || this;
+        _this.planeMove();
         _this.hpText = new egret.TextField();
-        _this.map.addChild(_this.hpText);
+        map.addChild(_this.hpText);
         _this.setHP = 5;
         return _this;
     }
@@ -29,7 +29,7 @@ var PlayerPlane = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    PlayerPlane.prototype.planeMove = function (map) {
+    PlayerPlane.prototype.planeMove = function () {
         var _this = this;
         map.addEventListener(egret.TouchEvent.TOUCH_MOVE, function (e) {
             _this.setPlaneIndex(e.stageX, e.stageY);

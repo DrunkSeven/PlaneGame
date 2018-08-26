@@ -2,9 +2,8 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
 var Plane = (function () {
-    function Plane(body, map, x, y, HP) {
+    function Plane(body, x, y, HP) {
         this.body = body;
-        this.map = map;
         this.HP = 10; //血量
         this.AmmoIndex = [0, 0]; //初始子弹位置
         this.setPlaneBody = body;

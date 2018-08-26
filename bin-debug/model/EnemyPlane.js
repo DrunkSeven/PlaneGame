@@ -13,13 +13,13 @@ r.prototype = e.prototype, t.prototype = new r();
  */
 var EnemyPlane = (function (_super) {
     __extends(EnemyPlane, _super);
-    function EnemyPlane(ID, body, map, x, y, HP) {
-        var _this = _super.call(this, body, map, x, y) || this;
+    function EnemyPlane(ID, body, x, y, HP) {
+        var _this = _super.call(this, body, x, y) || this;
         _this.ID = ID;
         _this.hpText = new egret.TextField();
         _this.hpText.x = _this.planeBody.x + 10;
         _this.hpText.y = _this.planeBody.y - 40;
-        _this.map.addChild(_this.hpText);
+        map.addChild(_this.hpText);
         _this.setHP = HP;
         return _this;
     }

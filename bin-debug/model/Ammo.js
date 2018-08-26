@@ -5,14 +5,23 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
  * 子弹类
  */
 var Ammo = (function () {
-    function Ammo(ammo, map, initialIndex, speed) {
-        this.map = map;
+    function Ammo(ammo, initialIndex, speed) {
         this.setAmmo = ammo;
         map.addChild(ammo);
         this.setSpeed = speed || 5;
         this.initialIndex = [initialIndex[0] - this.getAmmo.width / 2, initialIndex[1]];
         this.initAmmoIndex();
     }
+    Object.defineProperty(Ammo.prototype, "timeInterval", {
+        get: function () {
+            return this._timeInterval;
+        },
+        set: function (_timeInterval) {
+            this._timeInterval = _timeInterval;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Ammo.prototype, "setAmmoAnimation", {
         set: function (ammoAnimation) {
             this.ammoAnimation = ammoAnimation;

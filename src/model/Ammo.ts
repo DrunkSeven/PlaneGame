@@ -4,16 +4,23 @@
 class Ammo {
     private ammoBody: egret.Bitmap;              //子弹本体
     private speed: number;                       //子弹速度
+    private _timeInterval: number;               //子弹发射时间间隔
     private ammoAnimation: number;               //子弹动画编号
     private initialIndex: Array<number>          //子弹初始坐标;
     public centerX: number;                      //子弹中心坐标x
     public centerY: number;                      //子弹中心坐标y;
-    constructor(ammo: egret.Bitmap, protected map: eui.UILayer, initialIndex: Array<number>, speed?: number) {
-        this.setAmmo=ammo;
+    constructor(ammo: egret.Bitmap, initialIndex: Array<number>, speed?: number) {
+        this.setAmmo = ammo;
         map.addChild(ammo);
-        this.setSpeed=speed || 5;
+        this.setSpeed = speed || 5;
         this.initialIndex = [initialIndex[0] - this.getAmmo.width / 2, initialIndex[1]];
         this.initAmmoIndex();
+    }
+    get timeInterval(): number {
+        return this._timeInterval;
+    }
+    set timeInterval(_timeInterval) {
+        this._timeInterval = _timeInterval;
     }
     set setAmmoAnimation(ammoAnimation) {
         this.ammoAnimation = ammoAnimation;

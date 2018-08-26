@@ -4,7 +4,7 @@ class Plane {
     public centerX: number;                         //飞机中心坐标x
     public centerY: number;                         //飞机中心坐标y
     public AmmoIndex: Array<number> = [0, 0];       //初始子弹位置
-    constructor(protected body: egret.Bitmap, protected map: eui.UILayer, x: number, y: number, HP?: number) {
+    constructor(protected body: egret.Bitmap, x: number, y: number, HP?: number) {
         this.setPlaneBody=body;
         this.setPlaneIndex(x, y);
         map.addChild(body);

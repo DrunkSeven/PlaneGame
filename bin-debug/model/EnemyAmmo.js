@@ -13,8 +13,8 @@ r.prototype = e.prototype, t.prototype = new r();
  */
 var EnemyAmmo = (function (_super) {
     __extends(EnemyAmmo, _super);
-    function EnemyAmmo(ammo, map, initialIndex, speed) {
-        return _super.call(this, ammo, map, initialIndex, speed) || this;
+    function EnemyAmmo(ammo, initialIndex, speed) {
+        return _super.call(this, ammo, initialIndex, speed) || this;
     }
     return EnemyAmmo;
 }(Ammo));
