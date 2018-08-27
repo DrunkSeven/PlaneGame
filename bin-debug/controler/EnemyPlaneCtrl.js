@@ -6,8 +6,8 @@ var EnemyPlaneCtrl = (function () {
         if (count === void 0) { count = 5; }
         this._enemyPlaneArr = [];
         for (var i = 0; i < count; i++) {
-            var plane = new EnemyPlane(this._enemyPlaneArr.length, 'aircraft_small_png', GameUtil.setRandom(map.width - 40, 40), GameUtil.setRandom(180, 80), 1);
-            this.ammoCtrl = new AmmoCtrl(plane, 'enemyBullet_png', { direction: -5, count: 3, y: 40 });
+            var plane = new EnemyPlane('aircraft_small_png', GameUtil.setRandom(map.width - 40, 40), GameUtil.setRandom(180, 80), "" + this._enemyPlaneArr.length, 1);
+            this.ammoCtrl = new AmmoCtrl(plane, 'enemyBullet_png', { direction: -5, y: 40 });
             plane.getPlaneBody.addEventListener(eui.UIEvent.REMOVED, this.onRemove, { plane: plane, enemyPlaneArr: this._enemyPlaneArr });
             this._enemyPlaneArr.push(plane);
         }
@@ -25,7 +25,7 @@ var EnemyPlaneCtrl = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(EnemyPlaneCtrl.prototype, "ammoArr", {
+    Object.defineProperty(EnemyPlaneCtrl.prototype, "enemyAmmoArr", {
         get: function () {
             return this.ammoCtrl.ammoArr;
         },

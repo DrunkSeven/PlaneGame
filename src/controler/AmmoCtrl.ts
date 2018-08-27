@@ -21,7 +21,7 @@ class AmmoCtrl {
     constructor(plane: Plane, ammoImg: string, option: any = {}) {
         GameUtil.setOption(this.option, option);
         let interval = setInterval(() => {
-            let ammo: Ammo = new Ammo(ammoImg, [plane.centerX + this.option.x, plane.getPlaneBody.y + this.option.y], this._ammoArr.length, this.option.speed);
+            let ammo: Ammo = new Ammo(ammoImg, [plane.centerX + this.option.x, plane.getPlaneBody.y + this.option.y], this._ammoArr.length, plane.ID, this.option.speed);
             ammo.getAmmo.addEventListener(eui.UIEvent.REMOVED, this.onRemove, { ammo: ammo, ammoArr: this._ammoArr });
             this._ammoArr.push(ammo);
             this.startAmmoAnimation(ammo, this.option.direction);
@@ -40,20 +40,13 @@ class AmmoCtrl {
         return this._ammoArr;
     }
     //子弹动画
-    private startAmmoAnimation(ammo: Ammo, direction: number, isPlayer?: boolean) {
+    private startAmmoAnimation(ammo: Ammo, direction: number) {
         let ammoAnimation: number = setInterval(() => {
             ammo.setAmmoAnimation = ammoAnimation;
             ammo.setAmmoIndex(ammo.getAmmo.x, ammo.getAmmo.y - direction);
-            // let hit = this.hitTest(ammo, isPlayer);
-            if (ammo.getAmmo.y < -5) {
+            if (ammo.getAmmo.y < -5 || ammo.getAmmo.y > map.height + 5) {
                 clearTimeout(ammoAnimation);
                 map.removeChild(ammo.getAmmo);
-
-                // isPlayer ? ammo.setAmmoIndex(this.plane.centerX - ammo.getAmmo.width / 2, this.plane.getPlaneBody.y - 40) : ammo.initAmmoIndex();
-                // this.startAmmoAnimation(ammo, isPlayer);
-                // if (this.gameEnd()) {
-                //     return;
-                // }
             }
         }, ammo.getSpeed);
         this.intervalArr.push(ammoAnimation);

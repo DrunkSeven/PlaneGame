@@ -8,7 +8,7 @@ class PlayerPlaneCtrl {
     get playerPlane(): PlayerPlane {
         return this._playerPlane;
     }
-    get ammoArr(): Array<Ammo> {
+    get playerAmmoArr(): Array<Ammo> {
         return this.ammoCtrl.ammoArr;
     }
 }

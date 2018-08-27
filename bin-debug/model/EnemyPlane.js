@@ -13,29 +13,24 @@ r.prototype = e.prototype, t.prototype = new r();
  */
 var EnemyPlane = (function (_super) {
     __extends(EnemyPlane, _super);
-    function EnemyPlane(ID, body, x, y, HP) {
-        var _this = _super.call(this, body, x, y) || this;
-        _this._ID = ID;
+    function EnemyPlane(body, x, y, ID, HP) {
+        var _this = _super.call(this, body, x, y, ID) || this;
         _this.hpText = new egret.TextField();
         _this.hpText.x = _this.planeBody.x + 10;
         _this.hpText.y = _this.planeBody.y - 40;
         map.addChild(_this.hpText);
-        _this.setHP = HP;
+        _this.HP = HP;
         return _this;
     }
     EnemyPlane.prototype.getHpText = function () {
         return this.hpText;
     };
-    Object.defineProperty(EnemyPlane.prototype, "ID", {
+    Object.defineProperty(EnemyPlane.prototype, "HP", {
         get: function () {
-            return this._ID;
+            return this._HP;
         },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(EnemyPlane.prototype, "setHP", {
         set: function (HP) {
-            this.HP = HP;
+            this._HP = HP;
             this.hpText.text = HP + " " + this.ID + "\u53F7\u654C\u673A";
         },
         enumerable: true,

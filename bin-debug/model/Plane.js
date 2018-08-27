@@ -2,13 +2,14 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
 var Plane = (function () {
-    function Plane(body, x, y, HP) {
+    function Plane(body, x, y, ID) {
+        if (ID === void 0) { ID = "PLAYER"; }
         this.body = body;
-        this.HP = 10; //血量
-        this._id = "PLAYER"; //id
+        this._HP = 10; //血量
         this.AmmoIndex = [0, 0]; //初始子弹位置
         this.setPlaneBody = GameUtil.createBitmapByName(body);
         this.setPlaneIndex(x, y);
+        this._ID = ID;
         map.addChild(this.planeBody);
     }
     Plane.prototype.setPlaneIndex = function (x, y) {
@@ -17,9 +18,9 @@ var Plane = (function () {
         this.centerX = x;
         this.centerY = y;
     };
-    Object.defineProperty(Plane.prototype, "id", {
+    Object.defineProperty(Plane.prototype, "ID", {
         get: function () {
-            return this._id;
+            return this._ID;
         },
         enumerable: true,
         configurable: true
@@ -38,16 +39,10 @@ var Plane = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Plane.prototype, "getHP", {
+    Object.defineProperty(Plane.prototype, "HP", {
         get: function () {
-            return this.HP;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Plane.prototype, "setHP", {
-        set: function (HP) {
-            this.HP = HP;
+            console.log(this._HP);
+            return this._HP;
         },
         enumerable: true,
         configurable: true

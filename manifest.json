@@ -9,22 +9,21 @@
 	],
 	"game": [
 		"bin-debug/model/Plane.js",
-		"bin-debug/model/Ammo.js",
-		"bin-debug/LoadingUI.js",
+		"bin-debug/controler/EnemyPlaneCtrl.js",
 		"bin-debug/controler/PlayerPlaneCtrl.js",
+		"bin-debug/Platform.js",
 		"bin-debug/ThemeAdapter.js",
 		"bin-debug/abstract/HitCtrl.js",
 		"bin-debug/component/About.js",
 		"bin-debug/controler/AmmoCtrl.js",
-		"bin-debug/controler/EnemyPlaneCtrl.js",
-		"bin-debug/model/HitModel.js",
+		"bin-debug/model/Ammo.js",
+		"bin-debug/model/Scene.js",
 		"bin-debug/AssetAdapter.js",
-		"bin-debug/model/EnemyAmmo.js",
 		"bin-debug/model/EnemyPlane.js",
 		"bin-debug/model/GmaeUtil.js",
+		"bin-debug/model/HitModel.js",
 		"bin-debug/Main.js",
-		"bin-debug/Platform.js",
 		"bin-debug/model/PlayerPlane.js",
-		"bin-debug/model/Scene.js"
+		"bin-debug/LoadingUI.js"
 	]
 }

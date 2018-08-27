@@ -14,16 +14,20 @@ r.prototype = e.prototype, t.prototype = new r();
 var PlayerPlane = (function (_super) {
     __extends(PlayerPlane, _super);
     function PlayerPlane(body, x, y, HP) {
-        var _this = _super.call(this, body, x, y, HP) || this;
+        if (HP === void 0) { HP = 5; }
+        var _this = _super.call(this, body, x, y) || this;
         _this.planeMove();
         _this.hpText = new egret.TextField();
         map.addChild(_this.hpText);
-        _this.setHP = 5;
+        _this.HP = HP;
         return _this;
     }
-    Object.defineProperty(PlayerPlane.prototype, "setHP", {
+    Object.defineProperty(PlayerPlane.prototype, "HP", {
+        get: function () {
+            return this._HP;
+        },
         set: function (HP) {
-            this.HP = HP;
+            this._HP = HP;
             this.hpText.text = "" + HP;
         },
         enumerable: true,

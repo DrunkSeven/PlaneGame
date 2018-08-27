@@ -3,16 +3,19 @@
  */
 class PlayerPlane extends Plane {
     private hpText: egret.TextField;
-    constructor(body: string, x: number, y: number, HP?: number) {
-        super(body, x, y, HP);
+    constructor(body: string, x: number, y: number, HP: number = 5) {
+        super(body, x, y);
         this.planeMove();
         this.hpText = new egret.TextField();
         map.addChild(this.hpText);
-        this.setHP=5;
-    }
-    set setHP(HP: number) {
         this.HP = HP;
+    }
+    set HP(HP: number) {
+        this._HP = HP;
         this.hpText.text = `${HP}`;
+    }
+    get HP(): number {
+        return this._HP;
     }
     public planeMove() {
         map.addEventListener(egret.TouchEvent.TOUCH_MOVE, (e: egret.TouchEvent) => {

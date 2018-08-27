@@ -73,7 +73,7 @@ class Main extends eui.UILayer {
         this.addChild(this.textfield);
         this.plane = new PlayerPlaneCtrl();
         let enemyPlaneCtrl: EnemyPlaneCtrl = new EnemyPlaneCtrl();
-        let option = { enemyPlaneArr: enemyPlaneCtrl.enemyPlaneArr, enemyEmmoArr: enemyPlaneCtrl.ammoArr, playerEmmoArr: this.plane.ammoArr, this: this }
+        let option = { enemyPlaneArr: enemyPlaneCtrl.enemyPlaneArr, enemyEmmoArr: enemyPlaneCtrl.enemyAmmoArr, playerEmmoArr: this.plane.playerAmmoArr }
         this.addEventListener(egret.Event.ENTER_FRAME, this.onHitTest, option)
         // this.addEnemyPlane(6);
         // this.startAmmoAnimation(ammo, true);
@@ -83,33 +83,27 @@ class Main extends eui.UILayer {
         this.enemyPlaneArr.forEach((plane: EnemyPlane) => {
             this.playerEmmoArr.forEach((ammo: Ammo) => {
                 if (plane.getPlaneBody.hitTestPoint(ammo.centerX, ammo.centerY)) {
-                    plane.setHP = plane.getHP - 1;
+                    plane.HP = plane.HP - 1;
                     map.removeChild(ammo.getAmmo);
-                    if (plane.getHP <= 0) {
+                    if (plane.HP <= 0) {
                         map.removeChild(plane.getPlaneBody);
                     }
                 }
             });
         });
-        if (this.this.gameEnd(this.enemyPlaneArr.length)) {
+        this.enemyEmmoArr.forEach((ammo: Ammo) => {
+            if (map.plane.playerPlane.getPlaneBody.hitTestPoint(ammo.centerX, ammo.centerY)) {
+                map.plane.playerPlane.HP = map.plane.playerPlane.HP - 1;
+            }
+        })
+        if (map.gameEnd(this.enemyPlaneArr.length)) {
             egret.lifecycle.onPause = () => {
                 egret.ticker.pause();
             }
         }
     }
-
-    //设置敌机 num 敌机数量
-    private addEnemyPlane(num: number = 10) {
-        for (let i = 0; i < num; i++) {
-            let enemyPlane: EnemyPlane = new EnemyPlane(this.scene.enemyPlaneArr.length, 'aircraft_small_png', GameUtil.setRandom(this.width - 40, 40), GameUtil.setRandom(180, 80), 1);
-            let enemyAmmo: EnemyAmmo = new EnemyAmmo('enemyBullet_png', [enemyPlane.centerX, enemyPlane.getPlaneBody.y + 40], -5);
-            // this.startAmmoAnimation(enemyAmmo, false);
-            this.scene.enemyPlaneArr.push(enemyPlane);
-            this.scene.enemyAmmoArr.push(enemyAmmo);
-        }
-    }
     private gameEnd(enemyNum: number): boolean {
-        if (this.plane.playerPlane.getHP <= 0) {
+        if (this.plane.playerPlane.HP <= 0) {
             this.textfield.text = '游戏结束 你输了';
             return true;
         } else if (!enemyNum) {

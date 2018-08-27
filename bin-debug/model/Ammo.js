@@ -5,9 +5,10 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
  * 子弹类
  */
 var Ammo = (function () {
-    function Ammo(bodyImg, initialIndex, id, speed) {
+    function Ammo(bodyImg, initialIndex, id, parendID, speed) {
         this.setAmmo = GameUtil.createBitmapByName(bodyImg);
         this._ID = id;
+        this._parentID = parendID;
         map.addChild(this.ammoBody);
         this.setSpeed = speed || 5;
         this.initialIndex = [initialIndex[0] - this.getAmmo.width / 2, initialIndex[1]];
@@ -33,6 +34,13 @@ var Ammo = (function () {
     Object.defineProperty(Ammo.prototype, "setAmmoAnimation", {
         set: function (ammoAnimation) {
             this.ammoAnimation = ammoAnimation;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Ammo.prototype, "parentID", {
+        get: function () {
+            return this._parentID;
         },
         enumerable: true,
         configurable: true

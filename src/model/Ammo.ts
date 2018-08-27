@@ -8,11 +8,13 @@ class Ammo {
     private ammoAnimation: number;               //子弹动画编号
     private initialIndex: Array<number>          //子弹初始坐标;
     private _ID: number;                          //子弹ID;
+    private _parentID: string;                    //发射子弹的飞机的ID;
     public centerX: number;                      //子弹中心坐标x
     public centerY: number;                      //子弹中心坐标y;
-    constructor(bodyImg: string, initialIndex: Array<number>, id: number, speed?: number) {
+    constructor(bodyImg: string, initialIndex: Array<number>, id: number, parendID: string, speed?: number) {
         this.setAmmo = GameUtil.createBitmapByName(bodyImg);
         this._ID = id;
+        this._parentID = parendID;
         map.addChild(this.ammoBody);
         this.setSpeed = speed || 5;
         this.initialIndex = [initialIndex[0] - this.getAmmo.width / 2, initialIndex[1]];
@@ -29,6 +31,9 @@ class Ammo {
     }
     set setAmmoAnimation(ammoAnimation) {
         this.ammoAnimation = ammoAnimation;
+    }
+    get parentID() {
+        return this._parentID;
     }
     get getAmmoAnimation() {
         return this.ammoAnimation;

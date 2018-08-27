@@ -13,7 +13,7 @@ var PlayerPlaneCtrl = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(PlayerPlaneCtrl.prototype, "ammoArr", {
+    Object.defineProperty(PlayerPlaneCtrl.prototype, "playerAmmoArr", {
         get: function () {
             return this.ammoCtrl.ammoArr;
         },
